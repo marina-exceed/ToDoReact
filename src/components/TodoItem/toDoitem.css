@@ -1,0 +1,23 @@
+.btntodo {
+    width: 20%;
+    font-size: 80%;
+    color: #fffdf8;
+    text-shadow: #f9eff8 0 1px 2px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 1.1;
+    white-space: pre-line;
+    padding: .7em 0;
+    border: 1px solid;
+    border-color: #d5d8bb #9aa4a9 #a5a9a0 #d8d0d6;
+    border-radius: 6px;
+    outline: none;
+    background: #151515 linear-gradient(#3e3f40, #524e55 50%, #4d4d4d);
+    box-shadow: inset rgba(255, 255, 255, .5) 1px 1px;
+}
+
+li.checked {
+    background: #ffffff;
+    color: #000000;
+    text-decoration: line-through;
+}
