@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import TodoApi from './../../services/todoApi';
 import './wrapper.css';
 import TodoItem from '../TodoItem';
 
@@ -9,6 +10,9 @@ class Wrapper extends Component {
   state = {
     todos: [],
   };
+
+  TodoApi = new TodoApi();
+
   inputRef = React.createRef();
 //ВВОД С ПОМОЩТЮ ИНТЕР
   handleKeyPress = (event) => {
@@ -23,6 +27,7 @@ class Wrapper extends Component {
         }
         this.inputRef.current.value = '';
         this.setState({todos: todos});
+        this.TodoApi.addTodo();
       }
     }
   };
@@ -38,6 +43,7 @@ class Wrapper extends Component {
       counter++;
       this.inputRef.current.value = '';
       this.setState({todos: todos});
+      this.TodoApi.addTodo();
     }
   };
   //ОЧИЩАЕМ ЛИ
