@@ -19,19 +19,11 @@ class TodoItem extends Component {
     editTodoItem(index, value);
     this.setState({isEdit: false});
   };
-  changeInputLi = () => {
-    // cb = this.refs(cb);
-    // cat = this.refs(cat);
-    // if (cb.checked) cat.style.display = "block";
-    // else cat.style.display = "none";
-
-  };
 
   render() {
     const {text, index, removeItem, editTodoItem, checked, checkboxEditFunction} = this.props;
     const {isEdit} = this.state;
 
-    console.log('-------this.props:', this.props);
 
     return (
       <li className={`close ${checked? 'checked': ''}`} key={`todoItem-${index}`}>

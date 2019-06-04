@@ -54,7 +54,6 @@ class Wrapper extends Component {
   };
 
   checkboxEditFunction = (e, index) => {
-    console.log('--------ADADADADADADAD');
     const {todos} = this.state;
     todos[index].checked = !todos[index].checked;
     this.setState({todos: todos});
@@ -62,7 +61,6 @@ class Wrapper extends Component {
 
   render() {
     const todos = this.state.todos.map((todo, index) => {
-      console.log('-------todo:', todo);
       return (
         <TodoItem checkboxEditFunction={this.checkboxEditFunction} checked={todo.checked} text={todo.text} index={index} removeItem={this.removeItem} editTodoItem={this.editTodoItem}/>
       );
