@@ -4,7 +4,7 @@ export default class TodoApi {
       method
     };
 
-    if (method === 'POST') settings.body = body;
+    if (method === 'POST' || method === 'PUT') settings.body = JSON.stringify(body);
 
     const serviceUrl = `http://localhost:3005/api/${route}/${param}`;
     const serviceResponse = await fetch(serviceUrl, settings);
@@ -17,9 +17,25 @@ export default class TodoApi {
     return responseJson;
   }
 
-  addTodo(item = 'Hello') {
-    const newItem = this.serviceRequest('todos/add', 'POST', item);
+  async addTodo(item) {
+    const newItem = await this.serviceRequest('todos/add', 'POST', item);
 
     return newItem;
+  }
+
+  async getAllItems() {
+    const newItems = await this.serviceRequest('todos', 'GET');
+
+    return newItems;
+  }
+
+  deleteTodo(id) {
+    this.serviceRequest('todos/del', 'DELETE', {}, id);
+  }
+
+  async updateTodo(item) {
+    const updatedItem = await this.serviceRequest('todos/up', 'PUT', item);
+
+    return updatedItem;
   }
 }
