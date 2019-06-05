@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
 
 mongoose.connect('mongodb://localhost:27017/todo', {useNewUrlParser: true})
@@ -10,6 +12,8 @@ mongoose.connect('mongodb://localhost:27017/todo', {useNewUrlParser: true})
     console.log(err);
   });
 
+app.use(cors());
+app.use(bodyParser.text());
+app.use(bodyParser.urlencoded());
 app.use('/api', require('./routes'));
-
 app.listen('3005', () => console.log('Server is running'));

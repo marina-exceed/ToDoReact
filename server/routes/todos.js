@@ -1,13 +1,12 @@
 var express = require('express');
 var todos = express.Router();
 
-todos.get('/', (req, res) => {
+todos.get('/', require('../controllers/getTodo'));
 
-});
+todos.post('/add', require( '../controllers/addTodo'));
 
-todos.post('/add', (req, res) => {
-  console.log('Element was added.');
-});
+todos.delete('/del/:id', require('../controllers/deleteTodo'));
 
+todos.put('/up', require('../controllers/updateTodo'));
 
 module.exports = todos;

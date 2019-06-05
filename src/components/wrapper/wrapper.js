@@ -15,60 +15,95 @@ class Wrapper extends Component {
 
   inputRef = React.createRef();
 //ВВОД С ПОМОЩТЮ ИНТЕР
-  handleKeyPress = (event) => {
+  handleKeyPress = async (event) => {
     if (event.key === 'Enter') {
       const {todos} = this.state;
       if (this.inputRef.current.value !== '') {
-        todos.push({
+        const newItem = await this.TodoApi.addTodo({
           text: this.inputRef.current.value
         });
+        todos.push(newItem);
         if (this.inputRef.current.value === '') {
           return false;
         }
         this.inputRef.current.value = '';
         this.setState({todos: todos});
-        this.TodoApi.addTodo();
       }
     }
   };
 //ДОБАВЛЯЕМ ЛИ
-  changeTestState = () => {
+  changeTestState = async () => {
     const {todos} = this.state;
     if (this.inputRef.current.value !== '') {
-      todos.push({
+
+      const newItem = await this.TodoApi.addTodo({
         text: this.inputRef.current.value,
-        checked: false,
-        id: counter,
+        checked: false
       });
-      counter++;
+
+      todos.push(newItem);
+
       this.inputRef.current.value = '';
       this.setState({todos: todos});
-      this.TodoApi.addTodo();
     }
   };
   //ОЧИЩАЕМ ЛИ
   removeItem = (index) => {
     const {todos} = this.state;
-    todos.splice(index, 1);
+    const idx = todos.findIndex(todo => todo._id === index);
+
+    todos.splice(idx, 1);
     this.setState({todos: todos});
+    this.TodoApi.deleteTodo(index);
   };
   //ЗАМЕНА ЛИ
   editTodoItem = (index, value) => {
-      const {todos} = this.state;
-      todos[index].text = value;
-      this.setState({todos: todos});
-  };
-
-  checkboxEditFunction = (e, index) => {
     const {todos} = this.state;
-    todos[index].checked = !todos[index].checked;
+    const idx = todos.findIndex(todo => todo._id === index);
+
+    const updateddTodo = {
+      ...todos[idx],
+      text: value
+    };
+
+    this.TodoApi.updateTodo(updateddTodo);
+
+    todos[idx].text = value;
     this.setState({todos: todos});
   };
 
+  checkboxEditFunction = (e, index) => {
+    this.setState(({todos}) => {
+      const idx = todos.findIndex(todo => todo._id === index);
+      const updateddTodo = {
+        ...todos[idx],
+        checked: !todos[idx].checked
+      };
+
+      this.TodoApi.updateTodo(updateddTodo);
+
+      return({
+        todos: [
+          ...todos.slice(0, idx),
+          updateddTodo,
+          ...todos.slice(idx + 1),
+        ]
+      });
+    });
+  };
+
+  componentDidMount() {
+    this.TodoApi.getAllItems()
+      .then(({items}) => {
+        this.setState({todos: items});
+      });
+  }
+
   render() {
-    const todos = this.state.todos.map((todo, index) => {
+    const todos = this.state.todos.map((todo) => {
       return (
-        <TodoItem checkboxEditFunction={this.checkboxEditFunction} checked={todo.checked} text={todo.text} index={index} removeItem={this.removeItem} editTodoItem={this.editTodoItem}/>
+        <TodoItem key={todo._id} checkboxEditFunction={this.checkboxEditFunction} checked={todo.checked}
+                  text={todo.text} index={todo._id} removeItem={this.removeItem} editTodoItem={this.editTodoItem}/>
       );
     });
 
