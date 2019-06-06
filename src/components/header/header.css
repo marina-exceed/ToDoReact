@@ -1,9 +1,13 @@
-.header {
+h1 {
     padding: 30px 40px;
     text-align: center;
-    font-size: 3em;
+    font-size: 5em;
     font-weight: bold;
     color: #524e55;
     letter-spacing: -0.11em;
     text-shadow: -0.05em 0px 0.07em #ff5353;
+    text-decoration: none;
+}
+h1:hover{
+    cursor:pointer;
 }
