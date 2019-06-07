@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './registration.css'
 import {Link} from "react-router-dom";
 
-
 class Registr extends Component {
   constructor() {
     super();

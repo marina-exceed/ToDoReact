@@ -38,4 +38,16 @@ export default class TodoApi {
 
     return updatedItem;
   }
+
+  async registration(user) {
+    const response = this.serviceRequest('auth/registration', 'POST', user);
+
+    return response;
+  }
+  async login(user) {
+    const enterlog = this.serviceRequest('auth/enterlogin', 'POST', user);
+
+    return enterlog;
+  }
+
 }
