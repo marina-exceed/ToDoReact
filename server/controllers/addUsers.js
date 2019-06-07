@@ -10,7 +10,9 @@ const registration = (req, res) => {
   });
 
   NewUser.save((err, item) => {
-    if (err) return res.status(500).json({ err }).end();
+    if (err) {
+      return res.status(409).json({ err: "such email is already taken" }).end();
+    }
 
     res.status(200).json(item).end();
   });
